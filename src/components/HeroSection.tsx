@@ -1,5 +1,5 @@
 import { motion } from "framer-motion";
-import { ArrowDown, Palette, Video, Box } from "lucide-react";
+import { ArrowDown, Palette, Video, Box, Download } from "lucide-react";
 
 const HeroSection = () => {
   const scrollToWorks = () => {
@@ -59,7 +59,7 @@ const HeroSection = () => {
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.1 }}
-            className="text-5xl md:text-7xl lg:text-7xl font-sans font-extrabold mb-6 leading-[0.9]"
+            className="text-4xl md:text-7xl lg:text-7xl font-sans font-extrabold mb-6 leading-[1.05]"
           >
             Transformando ideias em{" "}
             <span className="text-gradient leading-[0.9]">experiências visuais</span>
@@ -69,8 +69,8 @@ const HeroSection = () => {
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.2 }}
-            className="text-xl md:text-xl text-muted-foreground mb-12 max-w-2xl mx-auto"
-          >
+            className="text-md md:text-xl max-sm:mb-6  text-muted-foreground mb-12 max-w-2xl mx-auto"
+            >
             Designer, Editor de Vídeo e Artista 3D criando soluções visuais
             impactantes para marcas e projetos únicos.
           </motion.p>
@@ -80,7 +80,7 @@ const HeroSection = () => {
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.3 }}
-            className="flex flex-wrap justify-center gap-4 mb-12"
+            className="flex flex-wrap justify-center gap-1 gap-y-1 mb-12 max-md:mb-8"
           >
             <div className="flex items-center gap-2 px-4 py-2 rounded-lg bg-secondary/50 border border-border">
               <Palette className="w-5 h-5 text-primary" />
@@ -96,22 +96,34 @@ const HeroSection = () => {
             </div>
           </motion.div>
 
-          <motion.button
+          <motion.div
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.4 }}
-            onClick={scrollToWorks}
-            className="group inline-flex items-center gap-2 px-8 py-4 rounded-full bg-primary text-primary-foreground font-semibold hover:scale-105 transition-transform duration-300 animate-pulse-glow"
+            className="flex flex-col sm:flex-row items-center justify-center gap-4"
           >
-            Ver meus trabalhos
-            <ArrowDown className="w-5 h-5 group-hover:translate-y-1 transition-transform" />
-          </motion.button>
+            <button
+              onClick={scrollToWorks}
+              className="group inline-flex items-center gap-2 px-8 py-4 rounded-full bg-primary text-primary-foreground font-semibold hover:scale-105 transition-transform duration-300 animate-pulse-glow"
+            >
+              Ver meus trabalhos
+              <ArrowDown className="w-5 h-5 group-hover:translate-y-1 transition-transform" />
+            </button>
+            <a
+              href="/davidkaio_editor_de_video_ptbr.pdf"
+              download
+              className="group inline-flex items-center gap-2 px-8 py-4 rounded-full bg-secondary border border-border text-foreground font-semibold hover:border-primary/50 hover:scale-105 transition-all duration-300"
+            >
+              Baixar currículo
+              <Download className="w-5 h-5 group-hover:translate-y-0.5 transition-transform" />
+            </a>
+          </motion.div>
         </div>
       </div>
 
       {/* Scroll indicator */}
       <motion.div
-        className="absolute bottom-10 left-1/2 -translate-x-1/2"
+        className="absolute bottom-10 max-md:bottom-7 left-1/2 -translate-x-1/2"
         animate={{ y: [0, 10, 0] }}
         transition={{ duration: 2, repeat: Infinity }}
       >

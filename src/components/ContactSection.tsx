@@ -69,15 +69,15 @@ const ContactSection = () => {
         } : {}} transition={{
           duration: 0.6,
           delay: 0.2
-        }} className="grid md:grid-cols-2 gap-8">
+        }} className="grid md:grid-cols-2 gap-8 w-full">
             {/* Contact Info */}
-            <div className="p-8 rounded-2xl card-gradient border border-border">
+            <div className="p-8 w-full rounded-2xl card-gradient border border-border">
               <h3 className="text-xl font-display font-semibold mb-6">
                 Informações de Contato
               </h3>
 
               <div className="space-y-6">
-                <div className="flex items-center gap-4">
+                <div className="flex items-center gap-4 flex-wrap">
                   <div className="w-12 h-12 rounded-xl bg-primary/10 flex items-center justify-center">
                     <Mail className="w-5 h-5 text-primary" />
                   </div>
@@ -108,7 +108,7 @@ const ContactSection = () => {
             </div>
 
             {/* Contact Form */}
-            <div className="p-8 rounded-2xl card-gradient border border-border">
+            <div className="p-8 rounded-2xl w-full card-gradient border border-border">
               <h3 className="text-xl font-display font-semibold mb-6">
                 Envie uma mensagem
               </h3>
