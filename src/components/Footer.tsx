@@ -11,7 +11,7 @@ const Footer = () => {
           <motion.p
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
-            className="text-sm text-muted-foreground"
+            className="text-sm text-muted-foreground max-md:text-center"
           >
             © {currentYear} David Kaio. Todos os direitos reservados.
           </motion.p>

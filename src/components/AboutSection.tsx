@@ -98,7 +98,7 @@ const AboutSection = () => {
             </p>
 
             {/* Stats */}
-            <div className="grid grid-cols-3 gap-4">
+            <div className="grid grid-cols-3 gap-4 max-sm:grid-cols-1">
               {stats.map((stat, index) => <motion.div key={stat.label} initial={{
               opacity: 0,
               y: 20
