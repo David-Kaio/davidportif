@@ -13,7 +13,7 @@ const Footer = () => {
             animate={{ opacity: 1 }}
             className="text-sm text-muted-foreground"
           >
-            © {currentYear} Portfolio. Todos os direitos reservados.
+            © {currentYear} David Kaio. Todos os direitos reservados.
           </motion.p>
 
           <motion.p

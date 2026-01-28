@@ -16,44 +16,45 @@ interface Experience {
 const experiences: Experience[] = [
   {
     id: 1,
-    role: "Designer Sênior & Motion Designer",
-    company: "Agência Criativa XYZ",
-    location: "São Paulo, SP",
-    period: "2022 - Presente",
+    role: "Freelance — Produção Audiovisual",
+    company: "THOR Limits",
+    location: "Contagem, MG",
+    period: "Maio 2025 - Presente",
     description:
-      "Liderança de projetos de design e motion graphics para grandes marcas. Desenvolvimento de identidades visuais e campanhas publicitárias.",
-    skills: ["Figma", "After Effects", "Illustrator", "Premiere Pro"],
+      "Produção de +10 vídeos mensais adaptados para 4 plataformas diferentes (Instagram, TikTok, YouTube e LinkedIn). Atuação completa no registro e pós-produção, com atenção à estética, ritmo e propósito comunicacional de cada peça.",
+    skills: ["Premiere Pro", "After Effects", "Captação de Vídeo", "Color Grading"],
     current: true,
   },
   {
     id: 2,
-    role: "Editor de Vídeo & Artista 3D",
-    company: "Studio Digital ABC",
-    location: "Rio de Janeiro, RJ",
-    period: "2020 - 2022",
+    role: "Estágio — Audiovisual",
+    company: "Escola ZION",
+    location: "Contagem, MG",
+    period: "Abril 2023 - Presente",
     description:
-      "Criação de conteúdo audiovisual e visualizações 3D para clientes do setor imobiliário e de produtos.",
-    skills: ["Cinema 4D", "Blender", "DaVinci Resolve", "Photoshop"],
+      "Mais de 2 anos liderando a produção audiovisual da unidade, com +200 conteúdos entregues entre vídeos institucionais, cobertura de eventos e materiais para redes sociais. Responsável por todo o fluxo: captação, edição e finalização.",
+    skills: ["Captação de Vídeo", "Edição de Vídeo", "Produção de Conteúdo"],
+    current: true,
   },
   {
     id: 3,
-    role: "Designer Gráfico",
-    company: "Startup Tech",
-    location: "Remoto",
-    period: "2019 - 2020",
+    role: "Auxiliar de Marketing",
+    company: "BNRBET",
+    location: "Contagem, MG",
+    period: "Março 2024 - Dezembro 2024",
     description:
-      "Design de interfaces, materiais de marketing e branding para startup em crescimento.",
-    skills: ["Sketch", "InVision", "Illustrator", "Photoshop"],
+      "Gestão de 3 redes sociais com produção de +50 artes visuais e 30 vídeos durante o período. Comunicação criativa e estratégica que contribuiu para o crescimento da presença digital da marca.",
+    skills: ["Design Gráfico", "Edição de Vídeo", "Social Media", "Marketing Digital"],
   },
   {
     id: 4,
-    role: "Freelancer",
-    company: "Autônomo",
-    location: "Diversos",
-    period: "2017 - 2019",
+    role: "Freelance — Produção Audiovisual",
+    company: "Tardezinha Beer",
+    location: "Contagem, MG",
+    period: "Junho 2024 - Agosto 2024",
     description:
-      "Início da carreira com projetos diversos de design gráfico, edição de vídeo e primeiros trabalhos em 3D.",
-    skills: ["Design Gráfico", "Edição de Vídeo", "Modelagem 3D"],
+      "Projeto de 3 meses com entrega de 15 peças audiovisuais focadas em storytelling e identidade de marca. Captação em eventos ao vivo e edição com narrativas atrativas para engajamento nas redes.",
+    skills: ["Storytelling", "Captação de Vídeo", "Edição de Vídeo", "Branding"],
   },
 ];
 
@@ -77,8 +78,7 @@ const ExperienceSection = () => {
             Histórico Profissional
           </h2>
           <p className="text-muted-foreground text-lg max-w-2xl mx-auto">
-            Minha jornada profissional e as experiências que moldaram minhas
-            habilidades.
+            Do estágio ao freelance para grandes marcas — uma trajetória de mais de 2 anos construindo histórias visuais, dominando ferramentas e entregando resultados que conectam marcas ao seu público.
           </p>
         </motion.div>
 

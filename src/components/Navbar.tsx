@@ -14,6 +14,9 @@ const navItems = [{
   label: "Experiência",
   href: "#experience"
 }, {
+  label: "Formação",
+  href: "#education"
+}, {
   label: "Contato",
   href: "#contact"
 }];
