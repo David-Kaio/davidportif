@@ -9,13 +9,13 @@ const AboutSection = () => {
     margin: "-100px"
   });
   const stats = [{
-    value: "5+",
+    value: "6+",
     label: "Anos de experiência"
   }, {
     value: "50+",
     label: "Projetos entregues"
   }, {
-    value: "30+",
+    value: "25+",
     label: "Clientes satisfeitos"
   }];
   const values = [{

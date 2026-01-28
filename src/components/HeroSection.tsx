@@ -59,17 +59,17 @@ const HeroSection = () => {
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.1 }}
-            className="text-5xl md:text-7xl lg:text-8xl font-display font-bold mb-6 leading-tight"
+            className="text-5xl md:text-7xl lg:text-7xl font-sans font-extrabold mb-6 leading-[0.9]"
           >
             Transformando ideias em{" "}
-            <span className="text-gradient">experiências visuais</span>
+            <span className="text-gradient leading-[0.9]">experiências visuais</span>
           </motion.h1>
 
           <motion.p
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.2 }}
-            className="text-xl md:text-2xl text-muted-foreground mb-12 max-w-2xl mx-auto"
+            className="text-xl md:text-xl text-muted-foreground mb-12 max-w-2xl mx-auto"
           >
             Designer, Editor de Vídeo e Artista 3D criando soluções visuais
             impactantes para marcas e projetos únicos.
