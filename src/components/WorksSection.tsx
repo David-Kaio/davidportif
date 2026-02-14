@@ -5,6 +5,7 @@ import { designWorks, type DesignWork } from "@/data/designWorks";
 import WorkCard from "./WorkCard";
 import WorkDetailDialog from "./WorkDetailDialog";
 import WorksPagination from "./WorksPagination";
+import VideoShowcaseSection from "./VideoShowcaseSection";
 
 type FilterType = "all" | "post" | "carrossel";
 
@@ -110,6 +111,9 @@ const WorksSection = () => {
           totalPages={totalPages}
           onPageChange={handlePageChange}
         />
+
+        {/* Vitrine de vídeos (YouTube) */}
+        <VideoShowcaseSection />
       </div>
 
       {/* Detail dialog */}

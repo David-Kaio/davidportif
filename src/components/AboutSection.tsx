@@ -64,9 +64,7 @@ const AboutSection = () => {
           delay: 0.2
         }} className="relative">
             <div className="aspect-square rounded-2xl card-gradient border border-border overflow-hidden">
-              <div className="w-full h-full bg-gradient-to-br from-primary/20 to-transparent flex items-center justify-center">
-                
-              </div>
+              <img src="/minha-historia.jpg" alt="Minha história" className="w-full h-full object-cover" />
             </div>
             {/* Decorative element */}
             <div className="absolute -bottom-4 -right-4 w-24 h-24 rounded-xl bg-primary/10 -z-10" />
