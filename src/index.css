@@ -1,0 +1,162 @@
+@import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Inter:wght@300;400;500;600&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --background: 235 54% 7%;
+    --foreground: 0 0% 98%;
+
+    --card: 238 44% 11%;
+    --card-foreground: 0 0% 98%;
+
+    --popover: 238 44% 11%;
+    --popover-foreground: 0 0% 98%;
+
+    --primary: 272 100% 68%;
+    --primary-foreground: 0 0% 100%;
+
+    --secondary: 234 33% 14%;
+    --secondary-foreground: 0 0% 98%;
+
+    --muted: 233 24% 18%;
+    --muted-foreground: 235 17% 72%;
+
+    --accent: 191 100% 61%;
+    --accent-foreground: 235 54% 7%;
+
+    --destructive: 0 74% 60%;
+    --destructive-foreground: 0 0% 100%;
+
+    --border: 0 0% 100% / 0.08;
+    --input: 0 0% 100% / 0.10;
+    --ring: 272 100% 68%;
+
+    --radius: 1.25rem;
+
+    --gradient-primary: linear-gradient(135deg, hsl(272 100% 68%) 0%, hsl(191 100% 61%) 100%);
+    --gradient-hero: radial-gradient(circle at top, hsl(272 100% 30% / 0.18), transparent 28%),
+      radial-gradient(circle at right center, hsl(191 100% 45% / 0.14), transparent 22%),
+      linear-gradient(180deg, hsl(235 54% 7%) 0%, hsl(239 49% 5%) 100%);
+    --gradient-card: linear-gradient(180deg, hsl(0 0% 100% / 0.09), hsl(0 0% 100% / 0.03));
+    --shadow-glow: 0 24px 80px -28px hsl(272 100% 68% / 0.45);
+    --shadow-card: 0 30px 80px -38px rgba(0, 0, 0, 0.8);
+
+    --sidebar-background: 238 44% 11%;
+    --sidebar-foreground: 0 0% 98%;
+    --sidebar-primary: 272 100% 68%;
+    --sidebar-primary-foreground: 0 0% 100%;
+    --sidebar-accent: 234 33% 14%;
+    --sidebar-accent-foreground: 0 0% 98%;
+    --sidebar-border: 0 0% 100% / 0.08;
+    --sidebar-ring: 272 100% 68%;
+  }
+
+  * {
+    @apply border-border;
+  }
+
+  html {
+    scroll-behavior: smooth;
+  }
+
+  body {
+    @apply bg-background text-foreground font-sans antialiased;
+    font-family: 'Inter', sans-serif;
+    background-image: var(--gradient-hero);
+    min-height: 100vh;
+  }
+
+  body::before {
+    content: "";
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    background:
+      radial-gradient(circle at 20% 20%, rgba(177, 84, 255, 0.16), transparent 20%),
+      radial-gradient(circle at 80% 12%, rgba(0, 214, 255, 0.12), transparent 18%),
+      radial-gradient(circle at 50% 100%, rgba(116, 64, 255, 0.10), transparent 22%);
+    filter: blur(18px);
+    z-index: -1;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    font-family: 'Space Grotesk', sans-serif;
+  }
+}
+
+@layer components {
+  .text-gradient {
+    @apply bg-clip-text text-transparent;
+    background-image: var(--gradient-primary);
+  }
+
+  .card-glow {
+    box-shadow: var(--shadow-glow);
+  }
+
+  .card-gradient {
+    background: var(--gradient-card);
+  }
+
+  .glass-panel {
+    @apply border border-white/10 bg-white/[0.05] backdrop-blur-2xl;
+    box-shadow: var(--shadow-card);
+  }
+
+  .hero-gradient {
+    background: transparent;
+  }
+
+  .section-container {
+    @apply mx-auto w-full max-w-[1560px] px-4 sm:px-5 lg:px-8;
+  }
+}
+
+@layer utilities {
+  .animate-float {
+    animation: float 8s ease-in-out infinite;
+  }
+
+  @keyframes float {
+    0%, 100% { transform: translateY(0px); }
+    50% { transform: translateY(-14px); }
+  }
+
+  .animate-pulse-glow {
+    animation: pulseGlow 3s ease-in-out infinite;
+  }
+
+  @keyframes pulseGlow {
+    0%, 100% { box-shadow: 0 0 24px -10px hsl(272 100% 68% / 0.45); }
+    50% { box-shadow: 0 0 48px -10px hsl(191 100% 61% / 0.4); }
+  }
+}
+
+@layer utilities {
+  .video-snap-carousel {
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+    -webkit-overflow-scrolling: touch;
+    overscroll-behavior-x: contain;
+  }
+
+  .video-snap-carousel::-webkit-scrollbar {
+    display: none;
+  }
+}
+
+@keyframes logo-marquee {
+  from { transform: translateX(0); }
+  to { transform: translateX(-33.333%); }
+}
+
+.animate-logo-marquee {
+  animation: logo-marquee 32s linear infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .animate-logo-marquee { animation: none; }
+}
