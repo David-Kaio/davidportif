@@ -13,6 +13,10 @@ export type YoutubeVideo = {
  */
 export const youtubeVideos: YoutubeVideo[] = [
   {
+    title: "REELS | LIFESTYLE",
+    urlOrId: "https://youtube.com/shorts/46TSgZj4LJc",
+  },
+  {
     title: "Short | Produção Audiovisual 01",
     urlOrId: "https://www.youtube.com/shorts/ADyHILi17j8",
   },

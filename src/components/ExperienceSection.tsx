@@ -1,6 +1,6 @@
 import { useRef } from "react";
 import { motion, useInView } from "framer-motion";
-import { Briefcase, Calendar, MapPin } from "lucide-react";
+import { Briefcase, Calendar, Film, MapPin, Sparkles, TrendingUp } from "lucide-react";
 
 interface Experience {
   id: number;
@@ -63,7 +63,7 @@ const ExperienceSection = () => {
   const isInView = useInView(ref, { once: true, margin: "-100px" });
 
   return (
-    <section id="experience" className="py-24 md:py-32 bg-background" ref={ref}>
+    <section id="experience" className="bg-transparent py-24 md:py-32" ref={ref}>
       <div className="section-container">
         <motion.div
           initial={{ opacity: 0, y: 40 }}
@@ -82,34 +82,24 @@ const ExperienceSection = () => {
           </p>
         </motion.div>
 
-        {/* Timeline */}
-        <div className="relative max-w-3xl mx-auto">
-          {/* Vertical line */}
-          <div className="absolute left-0 md:left-1/2 transform md:-translate-x-px top-0 bottom-0 w-0.5 bg-gradient-to-b from-primary via-primary/50 to-transparent" />
-
-          {experiences.map((exp, index) => (
+        <div className="grid items-start gap-12 lg:grid-cols-[minmax(0,1.35fr)_minmax(300px,.65fr)]">
+          <div className="relative">
+            <div className="absolute bottom-0 left-2 top-0 w-px bg-gradient-to-b from-primary via-primary/45 to-transparent" />
+            {experiences.map((exp, index) => (
             <motion.div
               key={exp.id}
               initial={{ opacity: 0, y: 40 }}
               animate={isInView ? { opacity: 1, y: 0 } : {}}
               transition={{ duration: 0.5, delay: 0.2 + index * 0.15 }}
-              className={`relative flex flex-col md:flex-row gap-8 mb-12 last:mb-0 ${
-                index % 2 === 0 ? "md:flex-row-reverse" : ""
-              }`}
+              className="relative mb-8 pl-10 last:mb-0"
             >
-              {/* Timeline dot */}
-              <div className="absolute left-0 md:left-1/2 transform -translate-x-1/2 w-4 h-4 rounded-full bg-primary border-4 border-background z-10">
+              <div className="absolute left-0 top-0 z-10 h-4 w-4 rounded-full border-4 border-white bg-primary">
                 {exp.current && (
                   <span className="absolute inset-0 rounded-full bg-primary animate-ping opacity-50" />
                 )}
               </div>
 
-              {/* Content card */}
-              <div
-                className={`ml-8 md:ml-0 md:w-1/2 ${
-                  index % 2 === 0 ? "md:pr-12 md:text-right" : "md:pl-12"
-                }`}
-              >
+              <div>
                 <div className="p-6 rounded-2xl card-gradient border border-border hover:border-primary/50 transition-colors duration-300">
                   {exp.current && (
                     <span className="inline-block px-3 py-1 rounded-full bg-primary/20 text-primary text-xs font-medium mb-3">
@@ -119,11 +109,7 @@ const ExperienceSection = () => {
                   <h3 className="text-xl font-display font-semibold mb-2">
                     {exp.role}
                   </h3>
-                  <div
-                    className={`flex flex-wrap gap-4 text-sm text-muted-foreground mb-4 ${
-                      index % 2 === 0 ? "md:justify-end" : ""
-                    }`}
-                  >
+                  <div className="mb-4 flex flex-wrap gap-4 text-sm text-muted-foreground">
                     <span className="flex items-center gap-1">
                       <Briefcase className="w-4 h-4" />
                       {exp.company}
@@ -140,11 +126,7 @@ const ExperienceSection = () => {
                   <p className="text-muted-foreground text-sm mb-4">
                     {exp.description}
                   </p>
-                  <div
-                    className={`flex flex-wrap gap-2 ${
-                      index % 2 === 0 ? "md:justify-end" : ""
-                    }`}
-                  >
+                  <div className="flex flex-wrap gap-2">
                     {exp.skills.map((skill) => (
                       <span
                         key={skill}
@@ -157,10 +139,35 @@ const ExperienceSection = () => {
                 </div>
               </div>
 
-              {/* Spacer for alternating layout */}
-              <div className="hidden md:block md:w-1/2" />
             </motion.div>
-          ))}
+            ))}
+          </div>
+
+          <motion.aside
+            initial={{ opacity: 0, x: 30 }}
+            animate={isInView ? { opacity: 1, x: 0 } : {}}
+            transition={{ duration: 0.65, delay: 0.35 }}
+            className="overflow-hidden rounded-[1.75rem] border border-violet-300/40 bg-gradient-to-br from-violet-600 via-purple-600 to-indigo-700 p-7 text-white shadow-[0_24px_60px_-32px_rgba(79,70,229,.65)] lg:sticky lg:top-28"
+          >
+            <div className="mb-8 flex items-center gap-3">
+              <div className="rounded-xl bg-white/12 p-3"><Sparkles className="h-5 w-5" /></div>
+              <div><p className="text-xs font-semibold uppercase tracking-[.2em] text-white/60">Em números</p><h3 className="mt-1 text-xl font-semibold">Uma trajetória em movimento</h3></div>
+            </div>
+            <div className="grid grid-cols-3 gap-3">
+              {[{ value: "+200", label: "conteúdos" }, { value: "4", label: "plataformas" }, { value: "+2", label: "anos" }].map((item) => (
+                <div key={item.label} className="rounded-2xl border border-white/15 bg-white/10 p-4 text-center backdrop-blur-sm">
+                  <p className="text-2xl font-bold">{item.value}</p><p className="mt-1 text-xs text-white/65">{item.label}</p>
+                </div>
+              ))}
+            </div>
+            <div className="mt-8 space-y-3">
+              {[{ icon: Film, text: "Produção audiovisual completa" }, { icon: TrendingUp, text: "Conteúdo orientado a resultado" }, { icon: Sparkles, text: "Identidade visual e storytelling" }].map((item) => (
+                <div key={item.text} className="flex items-center gap-3 rounded-xl border border-white/10 bg-indigo-950/20 px-4 py-3 text-sm text-white/85">
+                  <item.icon className="h-4 w-4 shrink-0 text-violet-200" />{item.text}
+                </div>
+              ))}
+            </div>
+          </motion.aside>
         </div>
       </div>
     </section>

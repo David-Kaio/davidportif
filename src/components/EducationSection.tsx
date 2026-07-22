@@ -35,7 +35,7 @@ const EducationSection = () => {
   const isInView = useInView(ref, { once: true, margin: "-100px" });
 
   return (
-    <section id="education" className="py-24 md:py-32 bg-secondary/30" ref={ref}>
+    <section id="education" className="bg-transparent py-24 md:py-32" ref={ref}>
       <div className="section-container">
         <motion.div
           initial={{ opacity: 0, y: 40 }}
