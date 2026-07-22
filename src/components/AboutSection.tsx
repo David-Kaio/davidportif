@@ -1,147 +1,96 @@
-import { motion } from "framer-motion";
-import { useInView } from "framer-motion";
+import { motion, useInView } from "framer-motion";
+import { Download, UserRound } from "lucide-react";
 import { useRef } from "react";
-import { Sparkles, Target, Heart } from "lucide-react";
+
+type AppItem = {
+  name: string;
+  logo: string;
+  logoClass?: string;
+};
+
+const apps: AppItem[] = [
+  { name: "Adobe After Effects", logo: "/apps/adobe-after-effects.png" },
+  { name: "Adobe Premiere", logo: "/apps/adobe-premiere.png" },
+  { name: "Adobe Photoshop", logo: "/apps/adobe-photoshop.png" },
+  { name: "Adobe Illustrator", logo: "/apps/adobe-illustrator.png" },
+  { name: "DaVinci Resolve Pro", logo: "/apps/davinci-resolve.png" },
+  { name: "CapCut", logo: "/apps/capcut.png" },
+  { name: "Canva", logo: "/apps/canva.png", logoClass: "h-11 w-[88px]" },
+  { name: "Blender", logo: "/apps/blender.png", logoClass: "h-14 w-[72px]" },
+];
+
 const AboutSection = () => {
-  const ref = useRef(null);
-  const isInView = useInView(ref, {
-    once: true,
-    margin: "-100px"
-  });
-  const stats = [{
-    value: "6+",
-    label: "Anos de experiência"
-  }, {
-    value: "50+",
-    label: "Projetos entregues"
-  }, {
-    value: "25+",
-    label: "Clientes satisfeitos"
-  }];
-  const values = [{
-    icon: Sparkles,
-    title: "Criatividade",
-    description: "Busco sempre soluções únicas e inovadoras para cada projeto."
-  }, {
-    icon: Target,
-    title: "Precisão",
-    description: "Atenção aos detalhes em cada elemento visual que crio."
-  }, {
-    icon: Heart,
-    title: "Paixão",
-    description: "Amor pelo que faço refletido em cada trabalho entregue."
-  }];
-  return <section id="about" className="py-24 md:py-32 bg-background" ref={ref}>
+  const ref = useRef<HTMLElement | null>(null);
+  const isInView = useInView(ref, { once: true, margin: "-80px" });
+
+  return (
+    <section id="about" ref={ref} className="border-b border-border bg-transparent py-20 md:py-24">
       <div className="section-container">
-        <motion.div initial={{
-        opacity: 0,
-        y: 40
-      }} animate={isInView ? {
-        opacity: 1,
-        y: 0
-      } : {}} transition={{
-        duration: 0.6
-      }} className="text-center mb-16">
-          <span className="text-primary font-medium mb-4 block">Sobre Mim</span>
-          <h2 className="text-4xl md:text-5xl font-display font-bold mb-6">
-            Conheça minha história
-          </h2>
-          <p className="text-muted-foreground text-lg max-w-2xl mx-auto">
-            Sou um profissional criativo apaixonado por transformar conceitos em
-            realidade visual através do design, vídeo e arte 3D.
-          </p>
-        </motion.div>
-
-        <div className="grid md:grid-cols-2 gap-12 items-center mb-20">
-          <motion.div initial={{
-          opacity: 0,
-          x: -40
-        }} animate={isInView ? {
-          opacity: 1,
-          x: 0
-        } : {}} transition={{
-          duration: 0.6,
-          delay: 0.2
-        }} className="relative">
-            <div className="aspect-square rounded-2xl card-gradient border border-border overflow-hidden">
-              <img src="/minha-historia.jpg" alt="Minha história" className="w-full h-full object-cover" />
+        <div className="grid items-start gap-12 lg:grid-cols-[0.78fr_1.22fr] lg:gap-16">
+          <motion.div
+            initial={{ opacity: 0, x: -28 }}
+            animate={isInView ? { opacity: 1, x: 0 } : {}}
+            transition={{ duration: 0.55 }}
+          >
+            <div className="mb-7 flex items-center gap-4">
+              <span className="flex h-12 w-12 items-center justify-center rounded-2xl bg-primary/10 text-primary">
+                <UserRound className="h-6 w-6" />
+              </span>
+              <h2 className="text-3xl font-bold tracking-tight md:text-4xl">Sobre mim</h2>
             </div>
-            {/* Decorative element */}
-            <div className="absolute -bottom-4 -right-4 w-24 h-24 rounded-xl bg-primary/10 -z-10" />
-          </motion.div>
 
-          <motion.div initial={{
-          opacity: 0,
-          x: 40
-        }} animate={isInView ? {
-          opacity: 1,
-          x: 0
-        } : {}} transition={{
-          duration: 0.6,
-          delay: 0.3
-        }}>
-            <h3 className="text-2xl font-display font-semibold mb-4">
-              Criando experiências visuais há mais de 5 anos
-            </h3>
-            <p className="text-muted-foreground mb-6 leading-relaxed">
-              Minha jornada começou com a paixão por criar. Ao longo dos anos,
-              desenvolvi habilidades em design gráfico, edição de vídeo e
-              modelagem 3D, sempre buscando entregar trabalhos que superem as
-              expectativas.
-            </p>
-            <p className="text-muted-foreground mb-8 leading-relaxed">
-              Acredito que cada projeto é uma oportunidade de contar uma
-              história única. Meu objetivo é sempre traduzir a essência de cada
-              marca ou ideia em visuais que conectam e inspiram.
-            </p>
-
-            {/* Stats */}
-            <div className="grid grid-cols-3 gap-4 max-sm:grid-cols-1">
-              {stats.map((stat, index) => <motion.div key={stat.label} initial={{
-              opacity: 0,
-              y: 20
-            }} animate={isInView ? {
-              opacity: 1,
-              y: 0
-            } : {}} transition={{
-              duration: 0.4,
-              delay: 0.4 + index * 0.1
-            }} className="text-center p-4 rounded-xl bg-secondary/50 border border-border">
-                  <div className="text-3xl font-display font-bold text-gradient mb-1">
-                    {stat.value}
-                  </div>
-                  <div className="text-xs text-muted-foreground">
-                    {stat.label}
-                  </div>
-                </motion.div>)}
-            </div>
-          </motion.div>
-        </div>
-
-        {/* Values */}
-        <div className="grid md:grid-cols-3 gap-6">
-          {values.map((value, index) => <motion.div key={value.title} initial={{
-          opacity: 0,
-          y: 30
-        }} animate={isInView ? {
-          opacity: 1,
-          y: 0
-        } : {}} transition={{
-          duration: 0.5,
-          delay: 0.5 + index * 0.1
-        }} className="p-6 rounded-2xl card-gradient border border-border hover:border-primary/50 transition-colors duration-300">
-              <div className="w-12 h-12 rounded-xl bg-primary/10 flex items-center justify-center mb-4">
-                <value.icon className="w-6 h-6 text-primary" />
-              </div>
-              <h4 className="text-xl font-display font-semibold mb-2">
-                {value.title}
-              </h4>
-              <p className="text-muted-foreground text-sm">
-                {value.description}
+            <div className="space-y-5 text-[15px] leading-7 text-muted-foreground md:text-base">
+              <p>
+                Sou editor de vídeo e criador visual apaixonado por transformar ideias em conteúdos simples, bonitos e marcantes. Minha experiência reúne edição, motion design, direção visual e criação para redes sociais.
               </p>
-            </motion.div>)}
+              <p>
+                Desde cedo, sempre fui curioso e conectado ao meio criativo. Com o tempo, passei a enxergar cada projeto como uma oportunidade de contar histórias, despertar emoções e aproximar marcas de pessoas.
+              </p>
+              <p>
+                No lado profissional, combino criatividade, organização e atenção aos detalhes para desenvolver vídeos, campanhas e peças visuais com identidade. Busco evoluir constantemente e entregar trabalhos que tenham propósito, ritmo e impacto.
+              </p>
+            </div>
+
+            <a
+              href="/davidkaio_editor_de_video_ptbr.pdf"
+              download
+              className="mt-8 inline-flex items-center gap-2 rounded-xl border border-border bg-white px-5 py-3 text-sm font-semibold text-foreground shadow-sm transition hover:-translate-y-0.5 hover:border-primary/40 hover:text-primary"
+            >
+              <Download className="h-4 w-4 text-primary" />
+              Baixar currículo
+            </a>
+          </motion.div>
+
+          <motion.div
+            initial={{ opacity: 0, x: 28 }}
+            animate={isInView ? { opacity: 1, x: 0 } : {}}
+            transition={{ duration: 0.55, delay: 0.1 }}
+            className="grid grid-cols-2 gap-4 sm:grid-cols-4"
+          >
+            {apps.map((app, index) => (
+              <motion.article
+                key={app.name}
+                initial={{ opacity: 0, y: 20 }}
+                animate={isInView ? { opacity: 1, y: 0 } : {}}
+                transition={{ duration: 0.4, delay: 0.12 + index * 0.055 }}
+                className="group flex min-h-[155px] flex-col items-center justify-center rounded-2xl border border-slate-200/90 bg-white px-3 py-6 text-center shadow-[0_12px_30px_-22px_rgba(15,23,42,.45)] transition duration-300 hover:-translate-y-1 hover:border-primary/25 hover:shadow-[0_18px_38px_-22px_rgba(79,70,229,.35)]"
+              >
+                <div className="mb-4 flex h-16 items-center justify-center transition-transform duration-300 group-hover:scale-105">
+                  <img
+                    src={app.logo}
+                    alt={`Logo ${app.name}`}
+                    loading="lazy"
+                    className={`object-contain ${app.logoClass ?? "h-14 w-14"}`}
+                  />
+                </div>
+                <h3 className="text-sm font-semibold leading-5 text-slate-900">{app.name}</h3>
+              </motion.article>
+            ))}
+          </motion.div>
         </div>
       </div>
-    </section>;
+    </section>
+  );
 };
+
 export default AboutSection;

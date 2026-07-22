@@ -38,7 +38,7 @@ const ContactSection = () => {
     href: "https://www.instagram.com/kimura.vfx/",
     label: "Instagram"
   }];
-  return <section id="contact" className="py-24 md:py-32 bg-secondary/20" ref={ref}>
+  return <section id="contact" className="bg-transparent py-24 md:py-32" ref={ref}>
       <div className="section-container">
         <div className="max-w-4xl mx-auto">
           <motion.div initial={{

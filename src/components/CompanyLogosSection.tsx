@@ -7,29 +7,27 @@ const logos = [
   { src: "/logos/logo-png.png", alt: "Unimax", className: "h-28 md:h-36", imageClassName: "scale-[0.80]" },
   { src: "/logos/logo-mark.png", alt: "Logo parceira", className: "h-20 md:h-21", imageClassName: "scale-[1.50]" },
   { src: "/logos/toca-do-monstro.png", alt: "Toca do Monstro", className: "h-24 md:h-32", imageClassName: "scale-[1.05]" },
-  { src: "/logos/death-squad.png", alt: "Death Squad", className: "h-30 md:h-38", imageClassName: "scale-[1.12]" },
   { src: "/logos/insider.png", alt: "Insider", className: "h-16 md:h-18", imageClassName: "brightness-0 invert" },
+  { src: "/logos/rede-coworking.avif", alt: "Rede Coworking", className: "h-16 md:h-20", imageClassName: "" },
 ];
-
-const repeatedLogos = [...logos, ...logos, ...logos];
 
 const CompanyLogosSection = () => {
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true, margin: "-120px" });
 
   return (
-    <section ref={ref} className="relative overflow-hidden bg-black py-12 md:py-16">
-      <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_25%_50%,rgba(168,85,247,0.12),transparent_30%),radial-gradient(circle_at_75%_50%,rgba(34,211,238,0.10),transparent_30%)]" />
-      <div className="pointer-events-none absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-white/15 to-transparent" />
-      <div className="pointer-events-none absolute inset-x-0 bottom-0 h-px bg-gradient-to-r from-transparent via-white/10 to-transparent" />
+    <section ref={ref} className="bg-white px-4 py-12 md:px-8 md:py-16">
+      <div className="relative mx-auto max-w-7xl overflow-hidden rounded-[2rem] border border-violet-300/50 bg-gradient-to-br from-violet-600 via-purple-600 to-indigo-600 py-12 shadow-[0_24px_70px_-35px_rgba(91,33,182,.55)] md:py-16">
+      <div className="pointer-events-none absolute -left-24 -top-24 h-72 w-72 rounded-full bg-white/10 blur-3xl" />
+      <div className="pointer-events-none absolute -bottom-28 right-0 h-80 w-80 rounded-full bg-indigo-300/20 blur-3xl" />
 
       <motion.div
         initial={{ opacity: 0, y: 26 }}
         animate={isInView ? { opacity: 1, y: 0 } : {}}
         transition={{ duration: 0.65, ease: "easeOut" }}
-        className="relative z-10 mx-auto mb-8 max-w-[min(92vw,1200px)] text-center"
+        className="relative z-10 mx-auto mb-8 max-w-[min(88vw,1100px)] px-6 text-center"
       >
-        <p className="text-xs font-semibold uppercase tracking-[0.34em] text-white/38">
+        <p className="text-xs font-semibold uppercase tracking-[0.34em] text-white/65">
           marcas e empresas por onde passei
         </p>
         <h3 className="mt-3 text-2xl font-bold text-white md:text-3xl">
@@ -41,27 +39,37 @@ const CompanyLogosSection = () => {
         initial={{ opacity: 0, scale: 0.98 }}
         animate={isInView ? { opacity: 1, scale: 1 } : {}}
         transition={{ duration: 0.8, delay: 0.15, ease: "easeOut" }}
-        className="group relative z-10 -my-10 overflow-x-hidden overflow-y-visible py-10"
+        className="relative z-10 -my-8 overflow-x-hidden overflow-y-visible py-8"
+        style={{
+          maskImage: "linear-gradient(to right, transparent 0%, black 9%, black 91%, transparent 100%)",
+          WebkitMaskImage: "linear-gradient(to right, transparent 0%, black 9%, black 91%, transparent 100%)",
+        }}
       >
-        <div className="pointer-events-none absolute inset-y-0 left-0 z-20 w-28 bg-gradient-to-r from-black to-transparent md:w-44" />
-        <div className="pointer-events-none absolute inset-y-0 right-0 z-20 w-28 bg-gradient-to-l from-black to-transparent md:w-44" />
-
-        <div className="flex w-max animate-logo-marquee items-center gap-8 group-hover:[animation-play-state:paused] md:gap-10">
-          {repeatedLogos.map((logo, index) => (
+        <div className="flex w-max animate-logo-marquee items-center">
+          {[0, 1].map((copyIndex) => (
             <div
-              key={`${logo.alt}-${index}`}
-              className="flex h-44 w-72 shrink-0 items-center justify-center rounded-2xl border border-white/8 bg-white/[0.035] px-10 py-8 backdrop-blur-xl transition duration-300 hover:-translate-y-1 hover:scale-[1.025] hover:border-cyan-300/25 hover:bg-white/[0.07] hover:shadow-[0_0_34px_rgba(34,211,238,0.14)] md:h-52 md:w-[22rem]"
+              key={copyIndex}
+              aria-hidden={copyIndex === 1}
+              className="flex shrink-0 items-center gap-8 pr-8 md:gap-10 md:pr-10"
             >
-              <img
-                src={logo.src}
-                alt={logo.alt}
-                loading="lazy"
-                className={`${logo.className} ${logo.imageClassName} max-w-[90%] object-contain opacity-70 grayscale transition duration-300 hover:opacity-100 hover:grayscale-0`}
-              />
+              {logos.map((logo) => (
+                <div
+                  key={`${copyIndex}-${logo.alt}`}
+                  className="flex h-40 w-64 shrink-0 items-center justify-center rounded-2xl border border-white/20 bg-indigo-950/55 px-9 py-7 shadow-[0_16px_35px_-24px_rgba(15,10,45,.85)] backdrop-blur-md transition duration-300 hover:-translate-y-1 hover:scale-[1.025] hover:border-white/35 hover:bg-indigo-950/70 md:h-48 md:w-80"
+                >
+                  <img
+                    src={logo.src}
+                    alt={copyIndex === 0 ? logo.alt : ""}
+                    loading="lazy"
+                    className={`${logo.className} ${logo.imageClassName} max-w-[90%] object-contain opacity-95 transition duration-300 hover:opacity-100`}
+                  />
+                </div>
+              ))}
             </div>
           ))}
         </div>
       </motion.div>
+      </div>
     </section>
   );
 };

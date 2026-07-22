@@ -1,145 +1,59 @@
 import { motion } from "framer-motion";
-import { ArrowDown, Clapperboard, Download, Film, Megaphone, Sparkles, Wand2 } from "lucide-react";
+import { ArrowDown, Download, Instagram, Linkedin, Mail } from "lucide-react";
 
-const skills = ["Edição Sênior", "Publicidade", "Motion", "Direção Visual", "Social Media", "3D"];
+const skills = ["Edição de vídeo", "Motion design", "Publicidade", "Direção visual", "Social media", "3D"];
 
 const HeroSection = () => {
-  const scrollToWorks = () => {
-    const element = document.querySelector("#works");
-    if (element) element.scrollIntoView({ behavior: "smooth" });
-  };
+  const scrollTo = (selector: string) => document.querySelector(selector)?.scrollIntoView({ behavior: "smooth" });
 
   return (
-    <section id="home" className="relative min-h-screen overflow-hidden pt-28 md:pt-32">
-      <div className="absolute inset-0 overflow-hidden">
-        <motion.div
-          className="absolute top-24 left-[10%] h-72 w-72 rounded-full bg-fuchsia-500/20 blur-[120px]"
-          animate={{ x: [0, 20, 0], y: [0, -15, 0] }}
-          transition={{ duration: 10, repeat: Infinity, ease: "easeInOut" }}
-        />
-        <motion.div
-          className="absolute right-[8%] top-36 h-72 w-72 rounded-full bg-cyan-400/20 blur-[120px]"
-          animate={{ x: [0, -20, 0], y: [0, 20, 0] }}
-          transition={{ duration: 12, repeat: Infinity, ease: "easeInOut" }}
-        />
-      </div>
-
-      <div className="section-container relative z-10">
-        <div className="grid items-center gap-12 lg:grid-cols-[1.1fr_0.9fr]">
-          <div className="max-w-3xl">
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.5 }}
-              className="mb-6 inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/5 px-4 py-2 text-sm text-muted-foreground backdrop-blur-xl"
-            >
-              <Sparkles className="h-4 w-4 text-primary" />
-              Editor de vídeo sênior • Publicitário • Motion designer
-            </motion.div>
-
-            <motion.h1
-              initial={{ opacity: 0, y: 24 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, delay: 0.05 }}
-              className="text-5xl font-bold leading-[0.95] md:text-7xl"
-            >
-              <span className="text-gradient">Editor de vídeo sênior</span>, publicitário e criador visual.
+    <section id="home" className="relative overflow-hidden border-b border-border bg-transparent pt-32 md:pt-36">
+      <div className="pointer-events-none absolute -right-32 top-20 h-96 w-96 rounded-full bg-indigo-100/70 blur-3xl" />
+      <div className="section-container relative z-10 pb-20 md:pb-28">
+        <div className="grid min-h-[680px] items-center gap-12 lg:grid-cols-[1.02fr_.98fr]">
+          <div className="max-w-2xl">
+            <motion.p initial={{opacity:0,y:18}} animate={{opacity:1,y:0}} className="mb-5 text-sm font-semibold uppercase tracking-[.22em] text-primary">
+              Olá, eu sou
+            </motion.p>
+            <motion.h1 initial={{opacity:0,y:22}} animate={{opacity:1,y:0}} transition={{delay:.05}} className="text-5xl font-bold leading-[.96] tracking-[-.045em] sm:text-6xl md:text-7xl">
+              David Kaio
             </motion.h1>
-
-            <motion.p
-              initial={{ opacity: 0, y: 24 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, delay: 0.12 }}
-              className="mt-6 max-w-2xl text-lg text-muted-foreground md:text-xl"
-            >
-              Eu transformo ideias em vídeos, campanhas e experiências visuais com ritmo, retenção e estética premium.
+            <motion.h2 initial={{opacity:0,y:22}} animate={{opacity:1,y:0}} transition={{delay:.1}} className="mt-4 text-2xl font-semibold text-primary sm:text-3xl">
+              Editor de vídeo e criador visual
+            </motion.h2>
+            <motion.p initial={{opacity:0,y:22}} animate={{opacity:1,y:0}} transition={{delay:.15}} className="mt-7 max-w-xl text-lg leading-relaxed text-muted-foreground">
+              Transformo ideias em vídeos, campanhas e experiências visuais diretas, envolventes e feitas para prender atenção.
             </motion.p>
 
-            <motion.div
-              initial={{ opacity: 0, y: 24 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, delay: 0.2 }}
-              className="mt-8 flex flex-wrap gap-3"
-            >
-              {skills.map((skill) => (
-                <span
-                  key={skill}
-                  className="rounded-full border border-white/10 bg-white/[0.04] px-4 py-2 text-sm text-white/85 backdrop-blur-xl"
-                >
-                  {skill}
-                </span>
-              ))}
+            <motion.div initial={{opacity:0,y:22}} animate={{opacity:1,y:0}} transition={{delay:.2}} className="mt-8 flex flex-wrap gap-2.5">
+              {skills.map((skill) => <span key={skill} className="rounded-full border border-border bg-secondary/70 px-4 py-2 text-sm font-medium text-secondary-foreground">{skill}</span>)}
             </motion.div>
 
-            <motion.div
-              initial={{ opacity: 0, y: 24 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, delay: 0.3 }}
-              className="mt-10 flex flex-col gap-4 sm:flex-row"
-            >
-              <button
-                onClick={scrollToWorks}
-                className="group inline-flex items-center justify-center gap-2 rounded-full bg-gradient-to-r from-fuchsia-500 to-cyan-400 px-8 py-4 font-semibold text-white card-glow transition-transform hover:scale-[1.02]"
-              >
-                Ver projetos
-                <ArrowDown className="h-5 w-5 transition-transform group-hover:translate-y-0.5" />
+            <motion.div initial={{opacity:0,y:22}} animate={{opacity:1,y:0}} transition={{delay:.25}} className="mt-9 flex flex-col gap-3 sm:flex-row">
+              <button onClick={() => scrollTo("#works")} className="inline-flex items-center justify-center gap-2 rounded-xl bg-primary px-7 py-4 font-semibold text-primary-foreground shadow-lg shadow-indigo-200 transition hover:-translate-y-0.5 hover:opacity-95">
+                Ver projetos <ArrowDown className="h-5 w-5" />
               </button>
-              <a
-                href="/davidkaio_editor_de_video_ptbr.pdf"
-                download
-                className="inline-flex items-center justify-center gap-2 rounded-full border border-white/10 bg-white/[0.04] px-8 py-4 font-semibold text-white/90 backdrop-blur-xl transition hover:border-white/20 hover:bg-white/[0.07]"
-              >
-                Baixar currículo
-                <Download className="h-5 w-5" />
+              <button onClick={() => scrollTo("#contact")} className="inline-flex items-center justify-center gap-2 rounded-xl border border-border bg-white px-7 py-4 font-semibold transition hover:border-primary/40 hover:bg-accent">
+                Entrar em contato <Mail className="h-5 w-5" />
+              </button>
+              <a href="/davidkaio_editor_de_video_ptbr.pdf" download className="inline-flex items-center justify-center gap-2 rounded-xl px-4 py-4 font-semibold text-muted-foreground transition hover:text-primary">
+                Currículo <Download className="h-5 w-5" />
               </a>
+            </motion.div>
+
+            <motion.div initial={{opacity:0}} animate={{opacity:1}} transition={{delay:.35}} className="mt-8 flex items-center gap-3">
+              <a href="https://www.linkedin.com/in/david-kaio-36278725b/" target="_blank" rel="noreferrer" aria-label="LinkedIn" className="rounded-full border border-border p-3 text-muted-foreground transition hover:border-primary/30 hover:text-primary"><Linkedin className="h-5 w-5" /></a>
+              <a href="https://www.instagram.com/kimura.vfx/" target="_blank" rel="noreferrer" aria-label="Instagram" className="rounded-full border border-border p-3 text-muted-foreground transition hover:border-primary/30 hover:text-primary"><Instagram className="h-5 w-5" /></a>
             </motion.div>
           </div>
 
-          <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.7, delay: 0.15 }}
-            className="relative mx-auto w-full max-w-[500px]"
-          >
-            <div className="relative overflow-hidden rounded-[2rem] border border-white/10 bg-white/[0.035] p-5 shadow-2xl shadow-black/30 backdrop-blur-xl md:p-6">
-              <div className="absolute inset-0 bg-gradient-to-br from-fuchsia-500/8 via-transparent to-cyan-400/8" />
-
-              <div className="relative rounded-[1.6rem] border border-white/10 bg-black/20 p-6 md:p-7">
-                <div className="mb-5 flex items-center justify-between gap-4">
-                  <span className="inline-flex h-12 w-12 items-center justify-center rounded-2xl bg-fuchsia-500/15 text-fuchsia-100 ring-1 ring-fuchsia-300/20">
-                    <Clapperboard className="h-5 w-5" />
-                  </span>
-                  <span className="rounded-full border border-white/10 bg-white/[0.04] px-3 py-1 text-xs text-white/60">desde 2019</span>
-                </div>
-
-                <p className="text-xs uppercase tracking-[0.32em] text-white/45">Especialidade principal</p>
-                <h3 className="mt-3 text-3xl font-bold leading-tight md:text-4xl">
-                  Edição, publicidade e direção visual.
-                </h3>
-                <p className="mt-4 text-sm leading-relaxed text-white/62">
-                  Conteúdo com ritmo, estética e estratégia — da ideia à entrega final.
-                </p>
-              </div>
-
-              <div className="relative mt-4 grid gap-3 sm:grid-cols-3">
-                <div className="rounded-[1.25rem] border border-cyan-300/15 bg-cyan-400/10 p-4">
-                  <Film className="mb-3 h-5 w-5 text-cyan-200" />
-                  <p className="text-[10px] uppercase tracking-[0.22em] text-white/45">Vídeo</p>
-                  <h4 className="mt-2 text-base font-bold leading-snug">Reels, shorts e institucionais</h4>
-                </div>
-
-                <div className="rounded-[1.25rem] border border-fuchsia-300/15 bg-fuchsia-500/10 p-4">
-                  <Megaphone className="mb-3 h-5 w-5 text-fuchsia-200" />
-                  <p className="text-[10px] uppercase tracking-[0.22em] text-white/45">Ads</p>
-                  <h4 className="mt-2 text-base font-bold leading-snug">Criativos para campanha</h4>
-                </div>
-
-                <div className="rounded-[1.25rem] border border-white/10 bg-white/[0.035] p-4">
-                  <Wand2 className="mb-3 h-5 w-5 text-cyan-200" />
-                  <p className="text-[10px] uppercase tracking-[0.22em] text-white/45">Visual</p>
-                  <h4 className="mt-2 text-base font-bold leading-snug">Estética limpa e memorável</h4>
-                </div>
-              </div>
+          <motion.div initial={{opacity:0,scale:.97,y:20}} animate={{opacity:1,scale:1,y:0}} transition={{duration:.7,delay:.12}} className="relative mx-auto w-full max-w-[520px]">
+            <div className="absolute -bottom-6 -left-6 h-36 w-36 rounded-[2rem] border border-indigo-100 bg-indigo-50" />
+            <div className="absolute -right-5 -top-5 grid grid-cols-4 gap-2 opacity-70">
+              {Array.from({length:16}).map((_,i)=><span key={i} className="h-1.5 w-1.5 rounded-full bg-primary" />)}
+            </div>
+            <div className="relative aspect-[4/4.5] overflow-hidden rounded-[2rem] border border-border bg-secondary shadow-[0_28px_80px_-35px_rgba(15,23,42,.38)]">
+              <img src="/minha-historia.jpg" alt="Foto de David Kaio" className="h-full w-full object-cover object-center" />
             </div>
           </motion.div>
         </div>
@@ -147,5 +61,4 @@ const HeroSection = () => {
     </section>
   );
 };
-
 export default HeroSection;
