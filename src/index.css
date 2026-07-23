@@ -53,6 +53,19 @@
   ::selection { background: rgba(99,102,241,.18); }
 }
 
+html.lenis,
+html.lenis body {
+  height: auto;
+}
+
+.lenis.lenis-smooth {
+  scroll-behavior: auto !important;
+}
+
+.lenis.lenis-stopped {
+  overflow: hidden;
+}
+
 @layer components {
   .text-gradient { @apply bg-clip-text text-transparent; background-image: var(--gradient-primary); }
   .card-glow { box-shadow: var(--shadow-glow); }
