@@ -82,6 +82,21 @@ html.lenis body {
   @keyframes pulseGlow { 0%,100%{box-shadow:0 0 24px -12px rgba(99,102,241,.35)} 50%{box-shadow:0 0 46px -12px rgba(99,102,241,.5)} }
   .video-snap-carousel { scrollbar-width:none; -ms-overflow-style:none; -webkit-overflow-scrolling:touch; overscroll-behavior-x:contain; }
   .video-snap-carousel::-webkit-scrollbar { display:none; }
+  .image-showcase-track {
+    grid-auto-flow: column;
+    grid-auto-columns: calc((100% - 1rem) / 2);
+    gap: 1rem;
+    scroll-snap-type: x mandatory;
+    scroll-padding-inline: .25rem;
+  }
+}
+
+@media (min-width: 640px) {
+  .image-showcase-track { grid-auto-columns: calc((100% - 3rem) / 4); }
+}
+
+@media (min-width: 1280px) {
+  .image-showcase-track { grid-auto-columns: calc((100% - 7rem) / 8); }
 }
 
 @keyframes logo-marquee {
