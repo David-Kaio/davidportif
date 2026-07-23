@@ -1,5 +1,6 @@
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { motion, useInView } from "framer-motion";
+import useEmblaCarousel from "embla-carousel-react";
 import { ChevronLeft, ChevronRight, Image as ImageIcon, Layers, X } from "lucide-react";
 import { designWorks, type DesignWork } from "@/data/designWorks";
 import VideoShowcaseSection from "./VideoShowcaseSection";
@@ -8,10 +9,19 @@ const WorksSection = () => {
   const [selectedWork, setSelectedWork] = useState<DesignWork | null>(null);
   const ref = useRef<HTMLElement>(null);
   const imageTrackRef = useRef<HTMLDivElement>(null);
-  const galleryTrackRef = useRef<HTMLDivElement>(null);
-  const dragStartX = useRef<number | null>(null);
-  const dragStartScrollLeft = useRef(0);
+  const [galleryRef, galleryApi] = useEmblaCarousel({
+    align: "start",
+    containScroll: "trimSnaps",
+    duration: 28,
+    loop: false,
+  });
   const isInView = useInView(ref, { once: true, margin: "-100px" });
+
+  useEffect(() => {
+    if (!selectedWork || !galleryApi) return;
+    galleryApi.reInit();
+    galleryApi.scrollTo(0, true);
+  }, [selectedWork, galleryApi]);
 
   const openWork = (work: DesignWork) => {
     setSelectedWork(work);
@@ -61,33 +71,19 @@ const WorksSection = () => {
 
       {selectedWork && (
         <div className="fixed inset-0 z-[100] flex items-center justify-center bg-black/90 p-2 backdrop-blur-sm" onMouseDown={(event) => event.target === event.currentTarget && setSelectedWork(null)}>
-          <div className="relative max-h-[96vh] max-w-[96vw] overflow-hidden rounded-lg border border-white/10 bg-black shadow-2xl">
+          <div className="relative h-[min(78vh,700px)] w-[min(88vw,560px)] overflow-hidden rounded-lg border border-white/10 bg-black shadow-2xl">
             <button type="button" aria-label="Fechar imagem" onClick={() => setSelectedWork(null)} className="absolute right-2 top-2 z-20 grid h-10 w-10 place-items-center rounded-full bg-black/65 text-white backdrop-blur-sm transition hover:bg-black/85"><X className="h-5 w-5" /></button>
             <div
-              ref={galleryTrackRef}
-              className={`gallery-preview-track video-snap-carousel flex max-h-[96vh] max-w-[96vw] overflow-x-auto ${selectedWork.images.length > 1 ? "cursor-grab active:cursor-grabbing" : ""}`}
-              onPointerDown={(event) => {
-                if (selectedWork.images.length < 2) return;
-                dragStartX.current = event.clientX;
-                dragStartScrollLeft.current = galleryTrackRef.current?.scrollLeft ?? 0;
-                event.currentTarget.setPointerCapture(event.pointerId);
-              }}
-              onPointerMove={(event) => {
-                if (dragStartX.current === null || !galleryTrackRef.current) return;
-                galleryTrackRef.current.scrollLeft = dragStartScrollLeft.current - (event.clientX - dragStartX.current);
-              }}
-              onPointerUp={(event) => {
-                if (dragStartX.current === null) return;
-                dragStartX.current = null;
-                event.currentTarget.releasePointerCapture(event.pointerId);
-              }}
-              onPointerCancel={() => { dragStartX.current = null; }}
+              ref={galleryRef}
+              className={`gallery-preview-track h-full overflow-hidden ${selectedWork.images.length > 1 ? "cursor-grab active:cursor-grabbing" : ""}`}
             >
-              {selectedWork.images.map((image, index) => (
-                <div key={image} className="flex max-h-[96vh] min-w-full snap-center items-center justify-center bg-black">
-                  <img src={image} alt={`${selectedWork.title} ${index + 1}`} className="max-h-[96vh] max-w-[96vw] select-none object-contain" draggable={false} />
-                </div>
-              ))}
+              <div className="flex h-full touch-pan-y">
+                {selectedWork.images.map((image, index) => (
+                  <div key={image} className="flex h-full min-w-0 flex-[0_0_100%] items-center justify-center bg-black">
+                    <img src={image} alt={`${selectedWork.title} ${index + 1}`} className="max-h-full max-w-full select-none object-contain" draggable={false} />
+                  </div>
+                ))}
+              </div>
             </div>
           </div>
         </div>
