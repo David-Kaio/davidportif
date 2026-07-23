@@ -56,10 +56,12 @@ const WorksSection = () => {
     const previousBodyOverflow = document.body.style.overflow;
     document.documentElement.style.overflow = "hidden";
     document.body.style.overflow = "hidden";
+    window.dispatchEvent(new CustomEvent("portfolio:scroll-lock", { detail: true }));
 
     return () => {
       document.documentElement.style.overflow = previousHtmlOverflow;
       document.body.style.overflow = previousBodyOverflow;
+      window.dispatchEvent(new CustomEvent("portfolio:scroll-lock", { detail: false }));
     };
   }, [selectedWork]);
 

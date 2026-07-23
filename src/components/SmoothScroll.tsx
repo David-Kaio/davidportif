@@ -26,9 +26,20 @@ const SmoothScroll = ({ children }: SmoothScrollProps) => {
       animationFrame = requestAnimationFrame(animate);
     };
 
+    const handleScrollLock = (event: Event) => {
+      const shouldLock = (event as CustomEvent<boolean>).detail;
+      if (shouldLock) {
+        lenis.stop();
+      } else {
+        lenis.start();
+      }
+    };
+
+    window.addEventListener("portfolio:scroll-lock", handleScrollLock);
     animationFrame = requestAnimationFrame(animate);
 
     return () => {
+      window.removeEventListener("portfolio:scroll-lock", handleScrollLock);
       cancelAnimationFrame(animationFrame);
       lenis.destroy();
     };
