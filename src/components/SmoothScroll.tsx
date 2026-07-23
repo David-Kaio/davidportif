@@ -7,16 +7,16 @@ type SmoothScrollProps = {
 
 const SmoothScroll = ({ children }: SmoothScrollProps) => {
   useEffect(() => {
-    const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
-
-    if (reducedMotion.matches) return;
-
     const lenis = new Lenis({
-      duration: 1.25,
-      easing: (t) => 1 - Math.pow(1 - t, 4),
+      duration: 1.6,
+      easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
       smoothWheel: true,
-      wheelMultiplier: 0.85,
-      touchMultiplier: 1.1,
+      wheelMultiplier: 0.8,
+      syncTouch: true,
+      syncTouchLerp: 0.075,
+      touchInertiaExponent: 1.7,
+      touchMultiplier: 1,
+      anchors: true,
     });
 
     let animationFrame = 0;
