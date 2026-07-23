@@ -63,7 +63,7 @@ const VideoShowcaseSection = () => {
                   <>
                     <iframe
                       className="h-full w-full"
-                      src={`https://www.youtube-nocookie.com/embed/${video.id}?autoplay=1&rel=0&playsinline=1`}
+                      src={`https://www.youtube-nocookie.com/embed/${video.id}?autoplay=1&rel=0&playsinline=1&vq=hd1080`}
                       title={video.title}
                       allow="autoplay; encrypted-media; picture-in-picture"
                       allowFullScreen

@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from "react";
-import { motion, useInView } from "framer-motion";
+import { AnimatePresence, motion, useInView } from "framer-motion";
 import useEmblaCarousel from "embla-carousel-react";
 import { ChevronLeft, ChevronRight, Image as ImageIcon, Layers, MoveHorizontal, X } from "lucide-react";
 import { designWorks, type DesignWork } from "@/data/designWorks";
@@ -8,8 +8,10 @@ import VideoShowcaseSection from "./VideoShowcaseSection";
 const WorksSection = () => {
   const [selectedWork, setSelectedWork] = useState<DesignWork | null>(null);
   const [previewSize, setPreviewSize] = useState<{ width: number; height: number } | null>(null);
+  const [showCarouselHint, setShowCarouselHint] = useState(false);
   const ref = useRef<HTMLElement>(null);
   const imageTrackRef = useRef<HTMLDivElement>(null);
+  const carouselPointerStartX = useRef<number | null>(null);
   const [galleryRef, galleryApi] = useEmblaCarousel({
     align: "start",
     containScroll: "trimSnaps",
@@ -67,6 +69,8 @@ const WorksSection = () => {
 
   const openWork = (work: DesignWork) => {
     setPreviewSize(null);
+    setShowCarouselHint(work.type === "carrossel");
+    carouselPointerStartX.current = null;
     setSelectedWork(work);
   };
 
@@ -127,6 +131,18 @@ const WorksSection = () => {
               <div
                 ref={galleryRef}
                 className={`gallery-preview-track h-full overflow-hidden ${selectedWork.images.length > 1 ? "cursor-grab active:cursor-grabbing" : "cursor-default"}`}
+                onPointerDown={(event) => {
+                  if (selectedWork.type === "carrossel") carouselPointerStartX.current = event.clientX;
+                }}
+                onPointerMove={(event) => {
+                  if (carouselPointerStartX.current === null) return;
+                  if (Math.abs(event.clientX - carouselPointerStartX.current) > 10) {
+                    setShowCarouselHint(false);
+                    carouselPointerStartX.current = null;
+                  }
+                }}
+                onPointerUp={() => { carouselPointerStartX.current = null; }}
+                onPointerCancel={() => { carouselPointerStartX.current = null; }}
               >
                 <div className="flex h-full touch-pan-y">
                   {selectedWork.images.map((image, index) => (
@@ -136,13 +152,38 @@ const WorksSection = () => {
                   ))}
                 </div>
               </div>
-              {selectedWork.type === "carrossel" && (
-                <div className="pointer-events-none absolute right-2 top-1/2 z-10 flex max-w-32 -translate-y-1/2 flex-col items-center gap-1.5 rounded-xl border border-white/25 bg-black/65 px-3 py-2.5 text-center text-white shadow-xl backdrop-blur-md">
-                  <MoveHorizontal className="h-5 w-5 text-primary-foreground" />
-                  <span className="text-[10px] font-bold uppercase tracking-wider">Post interativo</span>
-                  <span className="text-[10px] leading-3 text-white/75">Arraste para o lado</span>
-                </div>
-              )}
+              <AnimatePresence>
+                {selectedWork.type === "carrossel" && showCarouselHint && (
+                  <motion.div
+                    initial={{ opacity: 0, x: 28, y: "-50%", scale: 0.72 }}
+                    animate={{
+                      opacity: 1,
+                      x: 0,
+                      y: "-50%",
+                      scale: [1, 1.045, 1],
+                      boxShadow: [
+                        "0 18px 45px -18px rgba(99,102,241,.55)",
+                        "0 22px 58px -12px rgba(99,102,241,.9)",
+                        "0 18px 45px -18px rgba(99,102,241,.55)",
+                      ],
+                    }}
+                    exit={{ opacity: 0, x: 22, y: "-50%", scale: 0.86 }}
+                    transition={{
+                      opacity: { duration: 0.28 },
+                      x: { type: "spring", stiffness: 260, damping: 20 },
+                      scale: { delay: 0.35, duration: 1.8, repeat: Infinity, ease: "easeInOut" },
+                      boxShadow: { delay: 0.35, duration: 1.8, repeat: Infinity, ease: "easeInOut" },
+                    }}
+                    className="pointer-events-none absolute right-3 top-1/2 z-10 flex max-w-36 flex-col items-center gap-1.5 rounded-2xl border border-white/35 bg-gradient-to-br from-primary/95 to-violet-700/95 px-4 py-3 text-center text-white backdrop-blur-xl"
+                  >
+                    <motion.div animate={{ x: [-3, 3, -3] }} transition={{ duration: 1.15, repeat: Infinity, ease: "easeInOut" }}>
+                      <MoveHorizontal className="h-6 w-6" />
+                    </motion.div>
+                    <span className="text-[10px] font-extrabold uppercase tracking-[0.14em]">Post interativo</span>
+                    <span className="text-[11px] font-medium leading-4 text-white/85">Arraste para o lado</span>
+                  </motion.div>
+                )}
+              </AnimatePresence>
             </div>
           )}
           <div className="flex w-full max-w-xl items-center justify-between gap-3">
