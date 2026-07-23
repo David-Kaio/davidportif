@@ -6,20 +6,15 @@ import VideoShowcaseSection from "./VideoShowcaseSection";
 
 const WorksSection = () => {
   const [selectedWork, setSelectedWork] = useState<DesignWork | null>(null);
-  const [activeSlide, setActiveSlide] = useState(0);
   const ref = useRef<HTMLElement>(null);
   const imageTrackRef = useRef<HTMLDivElement>(null);
-  const swipeStartX = useRef<number | null>(null);
+  const galleryTrackRef = useRef<HTMLDivElement>(null);
+  const dragStartX = useRef<number | null>(null);
+  const dragStartScrollLeft = useRef(0);
   const isInView = useInView(ref, { once: true, margin: "-100px" });
 
   const openWork = (work: DesignWork) => {
     setSelectedWork(work);
-    setActiveSlide(0);
-  };
-
-  const moveSlide = (direction: number) => {
-    if (!selectedWork) return;
-    setActiveSlide((current) => (current + direction + selectedWork.images.length) % selectedWork.images.length);
   };
 
   const moveImageShowcase = (direction: number) => {
@@ -65,38 +60,34 @@ const WorksSection = () => {
       </div>
 
       {selectedWork && (
-        <div className="fixed inset-0 z-[100] flex items-center justify-center bg-slate-950/80 p-3 backdrop-blur-md" onMouseDown={(e) => e.target === e.currentTarget && setSelectedWork(null)}>
-          <div className="relative flex max-h-[92vh] w-full max-w-5xl flex-col overflow-hidden rounded-[1.6rem] bg-[#0b0d13] shadow-2xl">
-            <button onClick={() => setSelectedWork(null)} className="absolute right-3 top-3 z-20 grid h-10 w-10 place-items-center rounded-full bg-white/10 text-white backdrop-blur hover:bg-white/20"><X className="h-5 w-5" /></button>
+        <div className="fixed inset-0 z-[100] flex items-center justify-center bg-black/90 p-2 backdrop-blur-sm" onMouseDown={(event) => event.target === event.currentTarget && setSelectedWork(null)}>
+          <div className="relative max-h-[96vh] max-w-[96vw] overflow-hidden rounded-lg border border-white/10 bg-black shadow-2xl">
+            <button type="button" aria-label="Fechar imagem" onClick={() => setSelectedWork(null)} className="absolute right-2 top-2 z-20 grid h-10 w-10 place-items-center rounded-full bg-black/65 text-white backdrop-blur-sm transition hover:bg-black/85"><X className="h-5 w-5" /></button>
             <div
-              className="relative flex min-h-0 flex-1 touch-pan-y items-center justify-center p-4 sm:p-6"
-              onPointerDown={(event) => { swipeStartX.current = event.clientX; }}
-              onPointerUp={(event) => {
-                if (swipeStartX.current === null || selectedWork.images.length < 2) return;
-                const distance = event.clientX - swipeStartX.current;
-                swipeStartX.current = null;
-                if (Math.abs(distance) > 55) moveSlide(distance < 0 ? 1 : -1);
+              ref={galleryTrackRef}
+              className={`gallery-preview-track video-snap-carousel flex max-h-[96vh] max-w-[96vw] overflow-x-auto ${selectedWork.images.length > 1 ? "cursor-grab active:cursor-grabbing" : ""}`}
+              onPointerDown={(event) => {
+                if (selectedWork.images.length < 2) return;
+                dragStartX.current = event.clientX;
+                dragStartScrollLeft.current = galleryTrackRef.current?.scrollLeft ?? 0;
+                event.currentTarget.setPointerCapture(event.pointerId);
               }}
-              onPointerCancel={() => { swipeStartX.current = null; }}
+              onPointerMove={(event) => {
+                if (dragStartX.current === null || !galleryTrackRef.current) return;
+                galleryTrackRef.current.scrollLeft = dragStartScrollLeft.current - (event.clientX - dragStartX.current);
+              }}
+              onPointerUp={(event) => {
+                if (dragStartX.current === null) return;
+                dragStartX.current = null;
+                event.currentTarget.releasePointerCapture(event.pointerId);
+              }}
+              onPointerCancel={() => { dragStartX.current = null; }}
             >
-              <img src={selectedWork.images[activeSlide]} alt={`${selectedWork.title} ${activeSlide + 1}`} className="max-h-[68vh] max-w-full select-none rounded-xl object-contain" draggable={false} />
-              {selectedWork.images.length > 1 && <>
-                <button onClick={() => moveSlide(-1)} className="absolute left-3 top-1/2 grid h-11 w-11 -translate-y-1/2 place-items-center rounded-full bg-black/45 text-white backdrop-blur hover:bg-black/65"><ChevronLeft className="h-6 w-6" /></button>
-                <button onClick={() => moveSlide(1)} className="absolute right-3 top-1/2 grid h-11 w-11 -translate-y-1/2 place-items-center rounded-full bg-black/45 text-white backdrop-blur hover:bg-black/65"><ChevronRight className="h-6 w-6" /></button>
-              </>}
-            </div>
-            <div className="border-t border-white/10 bg-black/25 p-4">
-              <div className="video-snap-carousel flex gap-2 overflow-x-auto pb-2">
-                {selectedWork.images.map((image, index) => (
-                  <button key={image} onClick={() => setActiveSlide(index)} className={`h-20 w-16 shrink-0 overflow-hidden rounded-lg border-2 transition sm:h-24 sm:w-20 ${index === activeSlide ? "border-primary" : "border-transparent opacity-55 hover:opacity-100"}`}>
-                    <img src={image} alt={`Miniatura ${index + 1}`} className="h-full w-full object-cover" />
-                  </button>
-                ))}
-              </div>
-              <div className="mt-2 flex items-center justify-between gap-4 text-white">
-                <div><p className="font-semibold">{selectedWork.title}</p><p className="text-sm text-white/55">{selectedWork.company}</p></div>
-                <span className="text-sm text-white/55">{activeSlide + 1} / {selectedWork.images.length}</span>
-              </div>
+              {selectedWork.images.map((image, index) => (
+                <div key={image} className="flex max-h-[96vh] min-w-full snap-center items-center justify-center bg-black">
+                  <img src={image} alt={`${selectedWork.title} ${index + 1}`} className="max-h-[96vh] max-w-[96vw] select-none object-contain" draggable={false} />
+                </div>
+              ))}
             </div>
           </div>
         </div>
