@@ -7,6 +7,7 @@ import VideoShowcaseSection from "./VideoShowcaseSection";
 
 const WorksSection = () => {
   const [selectedWork, setSelectedWork] = useState<DesignWork | null>(null);
+  const [previewSize, setPreviewSize] = useState<{ width: number; height: number } | null>(null);
   const ref = useRef<HTMLElement>(null);
   const imageTrackRef = useRef<HTMLDivElement>(null);
   const [galleryRef, galleryApi] = useEmblaCarousel({
@@ -14,6 +15,7 @@ const WorksSection = () => {
     containScroll: "trimSnaps",
     duration: 28,
     loop: false,
+    watchDrag: Boolean(selectedWork && selectedWork.images.length > 1),
   });
   const isInView = useInView(ref, { once: true, margin: "-100px" });
 
@@ -23,8 +25,54 @@ const WorksSection = () => {
     galleryApi.scrollTo(0, true);
   }, [selectedWork, galleryApi]);
 
+  useEffect(() => {
+    if (!selectedWork) {
+      setPreviewSize(null);
+      return;
+    }
+
+    let cancelled = false;
+    const image = new Image();
+    image.onload = () => {
+      if (cancelled) return;
+      const maxWidth = Math.min(window.innerWidth * 0.88, 640);
+      const maxHeight = window.innerHeight * 0.7;
+      const scale = Math.min(maxWidth / image.naturalWidth, maxHeight / image.naturalHeight, 1);
+      setPreviewSize({
+        width: Math.round(image.naturalWidth * scale),
+        height: Math.round(image.naturalHeight * scale),
+      });
+    };
+    image.src = selectedWork.images[0];
+
+    return () => {
+      cancelled = true;
+    };
+  }, [selectedWork]);
+
+  useEffect(() => {
+    if (!selectedWork) return;
+    const previousHtmlOverflow = document.documentElement.style.overflow;
+    const previousBodyOverflow = document.body.style.overflow;
+    document.documentElement.style.overflow = "hidden";
+    document.body.style.overflow = "hidden";
+
+    return () => {
+      document.documentElement.style.overflow = previousHtmlOverflow;
+      document.body.style.overflow = previousBodyOverflow;
+    };
+  }, [selectedWork]);
+
   const openWork = (work: DesignWork) => {
+    setPreviewSize(null);
     setSelectedWork(work);
+  };
+
+  const moveDesign = (direction: number) => {
+    if (!selectedWork) return;
+    const currentIndex = designWorks.findIndex((work) => work.id === selectedWork.id);
+    const nextIndex = (currentIndex + direction + designWorks.length) % designWorks.length;
+    openWork(designWorks[nextIndex]);
   };
 
   const moveImageShowcase = (direction: number) => {
@@ -70,21 +118,33 @@ const WorksSection = () => {
       </div>
 
       {selectedWork && (
-        <div className="fixed inset-0 z-[100] flex items-center justify-center bg-black/90 p-2 backdrop-blur-sm" onMouseDown={(event) => event.target === event.currentTarget && setSelectedWork(null)}>
-          <div className="relative h-[min(78vh,700px)] w-[min(88vw,560px)] overflow-hidden rounded-lg border border-white/10 bg-black shadow-2xl">
-            <button type="button" aria-label="Fechar imagem" onClick={() => setSelectedWork(null)} className="absolute right-2 top-2 z-20 grid h-10 w-10 place-items-center rounded-full bg-black/65 text-white backdrop-blur-sm transition hover:bg-black/85"><X className="h-5 w-5" /></button>
-            <div
-              ref={galleryRef}
-              className={`gallery-preview-track h-full overflow-hidden ${selectedWork.images.length > 1 ? "cursor-grab active:cursor-grabbing" : ""}`}
-            >
-              <div className="flex h-full touch-pan-y">
-                {selectedWork.images.map((image, index) => (
-                  <div key={image} className="flex h-full min-w-0 flex-[0_0_100%] items-center justify-center bg-black">
-                    <img src={image} alt={`${selectedWork.title} ${index + 1}`} className="max-h-full max-w-full select-none object-contain" draggable={false} />
-                  </div>
-                ))}
+        <div className="fixed inset-0 z-[100] flex flex-col items-center justify-center gap-4 bg-black/90 p-3 backdrop-blur-sm" onMouseDown={(event) => event.target === event.currentTarget && setSelectedWork(null)}>
+          {previewSize && (
+            <div className="relative overflow-hidden rounded-lg border border-white/10 bg-black shadow-2xl" style={{ width: previewSize.width, height: previewSize.height }}>
+              <button type="button" aria-label="Fechar imagem" onClick={() => setSelectedWork(null)} className="absolute right-2 top-2 z-20 grid h-10 w-10 place-items-center rounded-full bg-black/65 text-white backdrop-blur-sm transition hover:bg-black/85"><X className="h-5 w-5" /></button>
+              <div
+                ref={galleryRef}
+                className={`gallery-preview-track h-full overflow-hidden ${selectedWork.images.length > 1 ? "cursor-grab active:cursor-grabbing" : "cursor-default"}`}
+              >
+                <div className="flex h-full touch-pan-y">
+                  {selectedWork.images.map((image, index) => (
+                    <div key={image} className="flex h-full min-w-0 flex-[0_0_100%] items-center justify-center">
+                      <img src={image} alt={`${selectedWork.title} ${index + 1}`} className="h-full w-full select-none object-contain" draggable={false} />
+                    </div>
+                  ))}
+                </div>
               </div>
             </div>
+          )}
+          <div className="flex w-full max-w-xl items-center justify-between gap-3">
+            <button type="button" onClick={() => moveDesign(-1)} className="inline-flex items-center gap-2 rounded-full border border-white/20 bg-black/50 px-4 py-2.5 text-sm font-medium text-white backdrop-blur transition hover:border-white/40 hover:bg-white/10">
+              <ChevronLeft className="h-4 w-4" />
+              Design anterior
+            </button>
+            <button type="button" onClick={() => moveDesign(1)} className="inline-flex items-center gap-2 rounded-full border border-white/20 bg-black/50 px-4 py-2.5 text-sm font-medium text-white backdrop-blur transition hover:border-white/40 hover:bg-white/10">
+              Próximo design
+              <ChevronRight className="h-4 w-4" />
+            </button>
           </div>
         </div>
       )}
