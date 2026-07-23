@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 import { motion, useInView } from "framer-motion";
 import useEmblaCarousel from "embla-carousel-react";
-import { ChevronLeft, ChevronRight, Image as ImageIcon, Layers, X } from "lucide-react";
+import { ChevronLeft, ChevronRight, Image as ImageIcon, Layers, MoveHorizontal, X } from "lucide-react";
 import { designWorks, type DesignWork } from "@/data/designWorks";
 import VideoShowcaseSection from "./VideoShowcaseSection";
 
@@ -136,6 +136,13 @@ const WorksSection = () => {
                   ))}
                 </div>
               </div>
+              {selectedWork.type === "carrossel" && (
+                <div className="pointer-events-none absolute right-2 top-1/2 z-10 flex max-w-32 -translate-y-1/2 flex-col items-center gap-1.5 rounded-xl border border-white/25 bg-black/65 px-3 py-2.5 text-center text-white shadow-xl backdrop-blur-md">
+                  <MoveHorizontal className="h-5 w-5 text-primary-foreground" />
+                  <span className="text-[10px] font-bold uppercase tracking-wider">Post interativo</span>
+                  <span className="text-[10px] leading-3 text-white/75">Arraste para o lado</span>
+                </div>
+              )}
             </div>
           )}
           <div className="flex w-full max-w-xl items-center justify-between gap-3">
