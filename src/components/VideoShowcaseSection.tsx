@@ -85,9 +85,17 @@ const VideoShowcaseSection = () => {
                     className="relative h-full w-full text-left"
                   >
                     <img
-                      src={`https://i.ytimg.com/vi/${video.id}/hqdefault.jpg`}
+                      src={`https://i.ytimg.com/vi/${video.id}/maxresdefault.jpg`}
                       alt=""
                       loading="lazy"
+                      decoding="async"
+                      onError={(event) => {
+                        const image = event.currentTarget;
+                        const fallback = image.dataset.fallback ?? "sd";
+                        if (fallback === "done") return;
+                        image.dataset.fallback = fallback === "sd" ? "hq" : "done";
+                        image.src = `https://i.ytimg.com/vi/${video.id}/${fallback === "sd" ? "sddefault" : "hqdefault"}.jpg`;
+                      }}
                       className="h-full w-full object-cover transition duration-500 group-hover:scale-105"
                     />
                     <div className="absolute inset-0 bg-gradient-to-t from-black/55 via-transparent to-black/5" />

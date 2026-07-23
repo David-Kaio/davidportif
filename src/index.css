@@ -96,7 +96,14 @@ html.lenis body {
 }
 
 @media (min-width: 1280px) {
-  .image-showcase-track { grid-auto-columns: calc((100% - 7rem) / 8); }
+  .image-showcase-track { grid-auto-columns: calc((100% - 4rem) / 5); }
+}
+
+.gallery-preview-track {
+  scroll-snap-type: x mandatory;
+  overscroll-behavior-x: contain;
+  touch-action: pan-y;
+  user-select: none;
 }
 
 @keyframes logo-marquee {
