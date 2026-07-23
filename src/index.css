@@ -92,15 +92,14 @@ html.lenis body {
 }
 
 @media (min-width: 640px) {
-  .image-showcase-track { grid-auto-columns: calc((100% - 3rem) / 4); }
+  .image-showcase-track { grid-auto-columns: calc((100% - 2rem) / 3); }
 }
 
 @media (min-width: 1280px) {
-  .image-showcase-track { grid-auto-columns: calc((100% - 4rem) / 5); }
+  .image-showcase-track { grid-auto-columns: calc((100% - 2rem) / 3); }
 }
 
 .gallery-preview-track {
-  scroll-snap-type: x mandatory;
   overscroll-behavior-x: contain;
   touch-action: pan-y;
   user-select: none;
