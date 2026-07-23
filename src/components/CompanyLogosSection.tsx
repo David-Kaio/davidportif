@@ -5,7 +5,6 @@ const logos = [
   { src: "/logos/bnrbet.png", alt: "BNRbet", className: "h-11 md:h-14", imageClassName: "" },
   { src: "/logos/zion.svg", alt: "Escola Zion", className: "h-12 md:h-16", imageClassName: "" },
   { src: "/logos/logo-png.png", alt: "Unimax", className: "h-28 md:h-36", imageClassName: "scale-[0.80]" },
-  { src: "/logos/logo-mark.png", alt: "Logo parceira", className: "h-20 md:h-21", imageClassName: "scale-[1.50]" },
   { src: "/logos/toca-do-monstro.png", alt: "Toca do Monstro", className: "h-24 md:h-32", imageClassName: "scale-[1.05]" },
   { src: "/logos/insider.png", alt: "Insider", className: "h-16 md:h-18", imageClassName: "brightness-0 invert" },
   { src: "/logos/rede-coworking.avif", alt: "Rede Coworking", className: "h-16 md:h-20", imageClassName: "" },
